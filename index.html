@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Battery Level Indicator</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+		h1 {
+			font-size: 2rem;
+			margin-top: 2rem;
+		}
+		#battery {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 300px;
+			height: 100px;
+			margin: 2rem auto;
+			background-color: #eee;
+			border-radius: 0.5rem;
+		}
+		#battery-level {
+			width: 0;
+			height: 100%;
+			background-color: #007bff;
+			border-radius: 0.5rem;
+			transition: width 0.2s ease-in-out;
+		}
+	</style>
+</head>
+<body>
+	<h1>Battery Level Indicator</h1>
+	<div id="battery">
+		<div id="battery-level"></div>
+	</div>
+
+	<script>
+		// Get DOM elements
+		const batteryLevelElement = document.getElementById('battery-level');
+
+		// Listen for battery level changes
+		navigator.getBattery().then(function(battery) {
+			updateBatteryLevel(battery.level);
+
+			battery.addEventListener('levelchange', function() {
+				updateBatteryLevel(battery.level);
+			});
+		});
+
+		// Update battery level indicator
+		function updateBatteryLevel(level) {
+			batteryLevelElement.style.width = (level * 100) + '%';
+		}
+	</script>
+</body>
+</html>
